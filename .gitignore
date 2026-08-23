@@ -1,0 +1,28 @@
+# Competition data must stay local
+data/raw/
+data/processed/
+
+# Generated artifacts
+models/
+submissions/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environments and secrets
+.env
+.venv/
+venv/
+env/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

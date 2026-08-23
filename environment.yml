@@ -1,0 +1,11 @@
+name: titanic-ml
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pandas>=2.2,<3
+  - scikit-learn>=1.5
+  - matplotlib>=3.9
+  - seaborn>=0.13
+  - jupyterlab>=4
