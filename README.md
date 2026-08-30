@@ -1,49 +1,88 @@
 # Titanic ML Baseline
 
-Baseline klasifikasi untuk kompetisi [Titanic: Machine Learning from Disaster](https://www.kaggle.com/competitions/titanic). Repo ini sedang dikerjakan; belum ada skor atau klaim hasil sampai submission valid tercatat.
+An end-to-end binary classification project for the [Titanic: Machine Learning from Disaster](https://www.kaggle.com/competitions/titanic) competition.
 
-## Ringkasan
+The project covers data auditing, preprocessing, cross-validation, feature engineering, error analysis, and Kaggle submission.
 
-- **Apa:** memprediksi apakah seorang penumpang selamat berdasarkan data penumpang.
-- **Tujuan:** menghasilkan baseline yang dapat dijalankan ulang dan satu submission Kaggle yang valid.
-- **Mengapa:** proyek kecil ini menguji alur kerja ML lengkap—data, validasi, model, prediksi, dan evaluasi.
-- **Cara kerja:** data latih dibersihkan, fitur diproses, model dilatih, lalu prediksi untuk data uji disimpan dalam format submission.
+## Project Goal
 
-## Target tujuh hari
+Predict whether a passenger survived using demographic and travel information while keeping the experiment reproducible and avoiding validation leakage.
 
-1. Memahami kolom, missing values, dan target `Survived`.
-2. Menentukan validation split serta metrik accuracy.
-3. Membuat baseline sederhana dengan pipeline scikit-learn.
-4. Mengirim satu submission valid dan mencatat skornya.
-5. Mencoba satu perbaikan yang terukur terhadap baseline.
+## Approach
 
-## Struktur
+- Audited missing values and target distribution.
+- Used median imputation and scaling for numerical features.
+- Used most-frequent imputation and one-hot encoding for categorical features.
+- Trained a Logistic Regression model through a scikit-learn pipeline.
+- Evaluated stability with stratified 5-fold cross-validation.
+- Engineered `FamilySize` and `IsAlone`.
+- Generated and validated a 418-row Kaggle submission.
+
+## Results
+
+| Evaluation | Result |
+|---|---:|
+| Majority-class holdout accuracy | 0.615 |
+| Logistic Regression holdout accuracy | 0.804 |
+| Baseline 5-fold CV | 0.797 ± 0.015 |
+| Engineered 5-fold CV | 0.802 ± 0.015 |
+| Survivor recall | 0.667 |
+| Kaggle public accuracy | 0.76794 |
+
+Family features improved mean cross-validation accuracy by `+0.006`.
+
+The Kaggle public score is approximately `0.034` below the local CV mean. This difference does not by itself prove overfitting, but it shows why both local validation and competition results must be tracked.
+
+## Error Analysis
+
+On the holdout set, the model produced:
+
+- 23 false negatives: survivors predicted as not surviving.
+- 12 false positives: non-survivors predicted as surviving.
+- Survivor recall of 0.667.
+
+Accuracy alone therefore does not describe all model weaknesses.
+
+## Repository Structure
 
 ```text
-data/       petunjuk data; file kompetisi tidak disimpan di Git
-notebooks/  eksplorasi dan eksperimen
-src/        kode final yang dapat digunakan ulang
-reports/    hasil, skor, dan keterbatasan
+data/       data instructions; competition CSV files are excluded from Git
+notebooks/  exploratory analysis and model experiments
+src/        reusable training code planned for the next milestone
+reports/    reports and comparison artifacts
 ```
 
-## Menyiapkan environment
+Main notebooks:
 
-```powershell
+- [`01_eda.ipynb`](notebooks/01_eda.ipynb) — initial data audit.
+- [`02_baseline_model.ipynb`](notebooks/02_baseline_model.ipynb) — validation, feature engineering, error analysis, and submission generation.
+
+## Setup
+
+A compatible Conda environment is provided:
+
+```bash
+git clone https://github.com/dermawanw/titanic-ml-baseline.git
+cd titanic-ml-baseline
 conda env create -f environment.yml
 conda activate titanic-ml
 jupyter lab
 ```
 
-Unduh data mengikuti [petunjuk di folder data](data/README.md). Jangan commit atau membagikan ulang file kompetisi.
+Download `train.csv` and `test.csv` from Kaggle, then place them in:
 
-## Bukti hasil
+```text
+data/raw/
+```
 
-Bagian ini akan diperbarui setelah tersedia:
+Competition data and generated submissions are intentionally excluded from Git.
 
-- Skor validasi: belum tersedia.
-- Skor Kaggle: belum tersedia.
-- Commit eksperimen terbaik: belum tersedia.
+## Limitations and Next Step
 
-## Lisensi
+This is a transparent baseline, not an optimized final model. It currently uses one linear classifier without systematic hyperparameter tuning.
 
-Kode tersedia dengan [MIT License](LICENSE). Dataset tetap mengikuti aturan dan lisensi Kaggle.
+The next milestone is to compare a tree-based model using the same cross-validation strategy and submit model v2 to Kaggle.
+
+## License
+
+Code is available under the [MIT License](LICENSE). The dataset remains subject to Kaggle's competition rules.
