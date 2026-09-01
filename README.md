@@ -28,10 +28,15 @@ Predict whether a passenger survived using demographic and travel information wh
 | Engineered 5-fold CV | 0.802 ± 0.015 |
 | Survivor recall | 0.667 |
 | Kaggle public accuracy | 0.76794 |
+| Best Kaggle public accuracy | 0.77033 |
 
 Family features improved mean cross-validation accuracy by `+0.006`.
 
 The Kaggle public score is approximately `0.034` below the local CV mean. This difference does not by itself prove overfitting, but it shows why both local validation and competition results must be tracked.
+
+Random Forest v2 improved the public score from 0.76794 to 0.77033
+(+0.00239). The next milestone is one controlled regularization
+experiment evaluated with the same cross-validation folds.
 
 ## Error Analysis
 
